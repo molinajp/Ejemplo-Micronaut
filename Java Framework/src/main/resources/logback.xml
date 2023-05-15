@@ -1,0 +1,53 @@
+<configuration>
+
+    <contextName>template</contextName>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <pattern>
+                    <pattern>
+                        {"serviceName": "%contextName"}
+                    </pattern>
+                </pattern>
+                <timestamp>
+                    <fieldName>timestamp</fieldName>
+                    <timeZone>UTC</timeZone>
+                </timestamp>
+                <logLevel>
+                    <fieldName>level</fieldName>
+                </logLevel>
+                <threadName>
+                    <fieldName>thread</fieldName>
+                </threadName>
+                <mdc />
+                <arguments>
+                    <includeNonStructuredArguments>false</includeNonStructuredArguments>
+                </arguments>
+                <stackTrace>
+                    <fieldName>stack</fieldName>
+                </stackTrace>
+                <message>
+                    <fieldName>context</fieldName>
+                </message>
+            </providers>
+
+        </encoder>
+    </appender>
+
+    <appender name="commonAppender"
+              class="common.commonlogger.client.appender.CommonAppender">
+        <layout>
+            <Pattern>%m</Pattern>
+        </layout>
+
+    </appender>
+
+    <logger name="logAppender" level="debug">
+        <appender-ref ref="commonAppender" />
+    </logger>
+
+    <root level="info">
+        <appender-ref ref="CONSOLE" />
+    </root>
+</configuration>
